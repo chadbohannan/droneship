@@ -1,13 +1,13 @@
 
 function flight_controller_box_params() = [
-    ["hole_x", 67],
-    ["hole_y", 97],
-    ["post_diameter", 8],
+    ["hole_x", 80],
+    ["hole_y", 110],
+    ["post_diameter", 10],
     ["bore_diameter", 3],
     ["case_z", 45],
-    ["case_floor", 1.5],
-    ["case_wall_thickness", 2],
-    ["case_wall_height", 20],
+    ["case_floor_thickness", 1.5],
+    ["case_wall_thickness", 12],
+    ["case_wall_height", 11.5],
     ["fn", 20],
 ];
 

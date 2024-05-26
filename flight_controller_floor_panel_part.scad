@@ -15,13 +15,13 @@ module flight_controller_floor_panel(hole_x, hole_y, post_diameter, bore_diamete
 
 module flight_controller_floor_panel_part() {
     params = flight_controller_box_params();
-    hole_x = find(params, "hole_x");
-    hole_y = find(params, "hole_y");
-    post_diameter = find(params, "post_diameter");
-    bore_diameter = find(params, "bore_diameter");
-    case_floor = find(params, "case_floor");
-    fn = find(params, "fn");
-    flight_controller_floor_panel(hole_x, hole_y, post_diameter, bore_diameter, case_floor, fn);
+    flight_controller_floor_panel(
+        find(params, "hole_x"),
+        find(params, "hole_y"),
+        find(params, "post_diameter"),
+        find(params, "bore_diameter"),
+        find(params, "case_floor_thickness"),
+        find(params, "fn"));
 }
 
 flight_controller_floor_panel_part();
