@@ -20,7 +20,7 @@ module vertical_post(pos, d, h, bore_diameter, fn) {
 }
 
 module vertical_posts(hole_x, hole_y, bore_diameter, post_diameter, case_z, z_pos, fn) {
-    z = case_floor+10;
+    z = 8.5;
     h = case_z-10;
     difference() {
         union(){
@@ -48,17 +48,18 @@ module side_walls(case_x, case_y, hole_x, hole_y, case_floor, case_wall_thicknes
 
 module lift_arm_mount_recess(case_x, case_y, hole_x, hole_y, case_floor, case_wall_thickness) {
     w = 10;
+    h = 7;
     translate([case_x/2-w, -hole_y/2-w/2, case_floor])
-        cube([w, w, w]);
+        cube([w, w, h]);
     
     translate([-case_x/2, -hole_y/2-w/2, case_floor])
-        cube([w, w, w]);
+        cube([w, w, h]);
     
     translate([hole_x/2-w/2, case_y/2-w, case_floor])
-        cube([w, w, w]);
+        cube([w, w, h]);
     
     translate([-hole_x/2-w/2, case_y/2-w, case_floor])
-        cube([w, w, w]);
+        cube([w, w, h]);
 }
 
 module flight_controller_wall_body(hole_x, hole_y, post_diameter, bore_diameter, case_z, case_floor, case_wall_thickness, case_wall_height, fn) {
