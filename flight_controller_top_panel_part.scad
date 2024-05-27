@@ -2,8 +2,8 @@ use <./flight_controller_box_params.scad>;
 use <./flight_controller_face_panel_base.scad>;
 use <./flight_controller_vert_screw_holes.scad>;
 
-module flight_controller_top_panel(hole_x, hole_y, post_diameter, bore_diameter, case_z, case_floor, fn) {
-    translate([0, 0, case_z])
+module flight_controller_top_panel(hole_x, hole_y, post_diameter, bore_diameter, z_pos, case_floor, fn) {
+    translate([0, 0, z_pos])
         difference(){
             flight_controller_face_panel_base(hole_x, hole_y, post_diameter, bore_diameter, case_floor, fn);
             flight_controller_vert_screw_holes(hole_x, hole_y, bore_diameter, case_floor, fn);

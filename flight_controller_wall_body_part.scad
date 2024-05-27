@@ -19,15 +19,13 @@ module vertical_post(pos, d, h, bore_diameter, fn) {
         }
 }
 
-module vertical_posts(hole_x, hole_y, bore_diameter, post_diameter, case_z, z_pos, fn) {
-    z = 8.5;
-    h = case_z-10;
+module vertical_posts(hole_x, hole_y, bore_diameter, post_diameter, height, z_pos, fn) {
     difference() {
         union(){
-            vertical_post([hole_x/2, hole_y/2, z_pos], post_diameter, h, bore_diameter, fn);
-            vertical_post([-hole_x/2, hole_y/2, z_pos], post_diameter, h, bore_diameter, fn);
-            vertical_post([-hole_x/2, -hole_y/2, z_pos], post_diameter, h, bore_diameter, fn);
-            vertical_post([hole_x/2, -hole_y/2, z_pos], post_diameter, h, bore_diameter, fn);
+            vertical_post([hole_x/2, hole_y/2, z_pos], post_diameter, height, bore_diameter, fn);
+            vertical_post([-hole_x/2, hole_y/2, z_pos], post_diameter, height, bore_diameter, fn);
+            vertical_post([-hole_x/2, -hole_y/2, z_pos], post_diameter, height, bore_diameter, fn);
+            vertical_post([hole_x/2, -hole_y/2, z_pos], post_diameter, height, bore_diameter, fn);
         }
     }
 }
@@ -76,7 +74,7 @@ module flight_controller_wall_body(hole_x, hole_y, post_diameter, bore_diameter,
                 case_wall_thickness,
                 case_wall_height,
                 post_diameter);
-            //vertical_posts(hole_x, hole_y, bore_diameter, post_diameter, case_z, case_floor+10, fn);
+            vertical_posts(hole_x, hole_y, bore_diameter, post_diameter, 3, case_floor+7, fn);
         }
         lift_arm_mount_recess(case_x, case_y, hole_x, hole_y, case_floor, case_wall_thickness);
     }

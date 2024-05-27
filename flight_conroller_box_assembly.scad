@@ -15,12 +15,14 @@ module flight_controll_box_assembly() {
     case_wall_thickness = find(params, "case_wall_thickness");
     case_wall_height = find(params, "case_wall_height");
     fn = find(params, "fn");
-      
+    
+    pad = 10;
     flight_controller_floor_panel(
         hole_x,
         hole_y,
         post_diameter,
         bore_diameter,
+        -pad,
         case_floor,
         fn);
     flight_controller_top_panel(
@@ -28,7 +30,7 @@ module flight_controll_box_assembly() {
         hole_y,
         post_diameter,
         bore_diameter,
-        case_z,
+        case_z + 2*pad,
         case_floor,
         fn);    
     flight_controller_wall_body(
@@ -47,20 +49,21 @@ module flight_controll_box_assembly() {
         hole_y,
         bore_diameter,
         post_diameter,
-        case_z,
-        case_floor+7,
+        case_z-case_wall_height,
+        case_floor+case_wall_height + pad,
         fn);
 
-    translate([hole_x/2, hole_y/2, case_floor])
+
+    translate([hole_x/2 + pad, hole_y/2 + pad, case_floor])
         rotate([0,0,-135])
             motor_mount_arm_part();
-    translate([hole_x/2, -hole_y/2, case_floor])
+    translate([hole_x/2 + pad, -hole_y/2 - pad, case_floor])
         rotate([0,0,135])
             motor_mount_arm_part();
-    translate([-hole_x/2, hole_y/2, case_floor])
+    translate([-hole_x/2 - pad, hole_y/2 + pad, case_floor])
         rotate([0,0,-45])
             motor_mount_arm_part();
-    translate([-hole_x/2, -hole_y/2, case_floor])
+    translate([-hole_x/2 - pad, -hole_y/2 - pad, case_floor])
         rotate([0,0,45])
             motor_mount_arm_part();
 }

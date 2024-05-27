@@ -7,7 +7,9 @@ function flight_controller_box_params() = [
     ["case_z", 45],
     ["case_floor_thickness", 1.5],
     ["case_wall_thickness", 12],
-    ["case_wall_height", 11.5],
+    ["case_wall_height", 10],
+    ["motor_mount_width", 10],
+    ["motor_mount_height", 3],
     ["fn", 20],
 ];
 
