@@ -11,6 +11,18 @@ module pi_cutout() {
         rounded_cube([pi_x,pi_y,pi_z], radius=3);
 }
 
+module vertical_hole(pos, bore_diameter, h, fn) {
+    translate(pos)
+        cylinder(d=bore_diameter, h=h, $fn=fn);
+}
+
+module vertical_holes(hole_x, hole_y, z_pos, bore_diameter, height, fn) {
+    vertical_hole([hole_x/2, hole_y/2, z_pos], bore_diameter, height, fn);
+    vertical_hole([-hole_x/2, hole_y/2, z_pos], bore_diameter, height, fn);
+    vertical_hole([-hole_x/2, -hole_y/2, z_pos], bore_diameter, height, fn);
+    vertical_hole([hole_x/2, -hole_y/2, z_pos], bore_diameter, height,  fn);
+}
+
 module vertical_post(pos, d, h, bore_diameter, fn) {
     translate(pos)
         difference(){
@@ -61,7 +73,6 @@ module flight_controller_wall_body(hole_x, hole_y, post_diameter, bore_diameter,
     case_y = hole_y + post_diameter;
     difference() {
         union() {
-            
             side_walls(case_x,
                 case_y,
                 hole_x,
@@ -72,6 +83,7 @@ module flight_controller_wall_body(hole_x, hole_y, post_diameter, bore_diameter,
                 post_diameter);
             vertical_posts(hole_x, hole_y, bore_diameter, post_diameter, 3, case_floor+7, fn);
         }
+        vertical_holes(hole_x, hole_y, case_floor+7, bore_diameter, 3, fn);
         lift_arm_mount_recess(case_x, case_y, hole_x, hole_y, case_floor, case_wall_thickness);
     }
 }
