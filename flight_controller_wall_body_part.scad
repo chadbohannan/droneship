@@ -20,14 +20,10 @@ module vertical_post(pos, d, h, bore_diameter, fn) {
 }
 
 module vertical_posts(hole_x, hole_y, bore_diameter, post_diameter, height, z_pos, fn) {
-    difference() {
-        union(){
-            vertical_post([hole_x/2, hole_y/2, z_pos], post_diameter, height, bore_diameter, fn);
-            vertical_post([-hole_x/2, hole_y/2, z_pos], post_diameter, height, bore_diameter, fn);
-            vertical_post([-hole_x/2, -hole_y/2, z_pos], post_diameter, height, bore_diameter, fn);
-            vertical_post([hole_x/2, -hole_y/2, z_pos], post_diameter, height, bore_diameter, fn);
-        }
-    }
+    vertical_post([hole_x/2, hole_y/2, z_pos], post_diameter, height, bore_diameter, fn);
+    vertical_post([-hole_x/2, hole_y/2, z_pos], post_diameter, height, bore_diameter, fn);
+    vertical_post([-hole_x/2, -hole_y/2, z_pos], post_diameter, height, bore_diameter, fn);
+    vertical_post([hole_x/2, -hole_y/2, z_pos], post_diameter, height, bore_diameter, fn);
 }
 
 module side_walls(case_x, case_y, hole_x, hole_y, case_floor, case_wall_thickness, case_wall_height, post_diameter) {

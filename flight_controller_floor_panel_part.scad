@@ -21,6 +21,7 @@ module flight_controller_floor_panel_part() {
         find(params, "hole_y"),
         find(params, "post_diameter"),
         find(params, "bore_diameter"),
+        0,
         find(params, "case_floor_thickness"),
         find(params, "fn"));
 }
