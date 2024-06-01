@@ -16,7 +16,7 @@ module flight_controll_box_assembly() {
     case_wall_height = find(params, "case_wall_height");
     fn = find(params, "fn");
     
-    pad = 10;
+    pad = 0;
     flight_controller_floor_panel(
         hole_x,
         hole_y,
