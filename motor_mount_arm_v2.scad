@@ -27,22 +27,22 @@ module fan_shroud() {
 module motor_holes() {
     translate([0, -hole_spc/2, 0])
         cylinder(h, 1, 1, $fn=fn);
-    translate([0, -hole_spc/2, h-2])
-        cylinder(2, 2, 2, $fn=fn);
+    translate([0, -hole_spc/2, 0])
+        #cylinder(2, 2, 2, $fn=fn);
     
     translate([0, hole_spc/2, 0])
         cylinder(h, 1, 1, $fn=fn);
-    translate([0, hole_spc/2, h-2])
+    translate([0, hole_spc/2, 0])
         cylinder(2, 2, 2, $fn=fn);
     
     translate([-hole_spc/2, 0, 0])
         cylinder(h, 1, 1, $fn=fn);
-    translate([-hole_spc/2, 0, h-2])
+    translate([-hole_spc/2, 0, 0])
         cylinder(2, 2, 2, $fn=fn);
     
     translate([hole_spc/2, 0, 0])
         cylinder(h, 1, 1, $fn=fn);
-    translate([hole_spc/2, 0, h-2])
+    translate([hole_spc/2, 0, 0])
         cylinder(2, 2, 2, $fn=fn);
     
     //motor bearing
@@ -74,7 +74,7 @@ module motor_mount_arm_part() {
     rotate([180,0,0])
     translate([-l,0,-h])
         union() {
-            fan_blade();
+            //fan_blade();
             fan_shroud();
             difference(){
                 mount_arm();
