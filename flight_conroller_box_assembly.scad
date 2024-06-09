@@ -2,7 +2,7 @@ use <./flight_controller_box_params.scad>;
 use <./flight_controller_wall_body_part.scad>;
 use <./flight_controller_floor_panel_part.scad>;
 use<./flight_controller_top_panel_part.scad>;
-use<./motor_mount_arm_v2.scad>;
+use<./motor_mount_arm_v3.scad>;
 
 module flight_controll_box_assembly() {
     params = flight_controller_box_params();
@@ -44,6 +44,7 @@ module flight_controll_box_assembly() {
         case_wall_height,
         fn);
 
+/*
     vertical_posts(
         hole_x,
         hole_y,
@@ -52,7 +53,7 @@ module flight_controll_box_assembly() {
         case_z-case_wall_height,
         case_floor+case_wall_height + pad,
         fn);
-
+*/
 
     translate([hole_x/2 + pad, hole_y/2 + pad, case_floor])
         rotate([0,0,-135])
