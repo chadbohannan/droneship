@@ -23,7 +23,9 @@ module fan_shroud() {
         cylinder(h = shroud_height, r1 = r1, r2 = r2, $fn=fn);
         translate([0,0,-0.05])
             cylinder(h = shroud_height+0.1, r1 = r1-1, r2= r2-1, $fn=fn);
-        
+        translate([-shroud_radius,100,398])
+            rotate([90,0,0])
+                cylinder(h=200, r= 370, $fn=100);
     }
 }
 
