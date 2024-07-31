@@ -26,9 +26,12 @@ module fan_shroud() {
         translate([-shroud_radius,100,398])
             rotate([90,0,0])
                 cylinder(h=200, r= 370, $fn=100);
+        
+        /* wire throughhole routes wires across threaded bolt end
         translate([shroud_radius-3,0,12.5])
             rotate([0,90,0])
                 cylinder(h=7, d=5, $fn=fn);
+        */
     }
 }
 
