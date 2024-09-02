@@ -7,5 +7,11 @@ Drawings and configurations for drone airship
 
 # Planned
 2000kV Brushless RC motors
-6 in twin-blade props
+6in twin-blade props
 4S battery pack
+
+
+# Actual
+3800kV Brushless motor
+4in twin-blade props
+4Sx2 battery pack

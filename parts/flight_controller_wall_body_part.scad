@@ -1,15 +1,8 @@
-use <./flight_controller_box_params.scad>;
-use <./includes/rounded_cube.scad>;
+use <../params.scad>;
+use <../includes/rounded_cube.scad>;
 use <./flight_controller_vert_screw_holes.scad>;
 
-// models the space the computer needs to float in
-module pi_cutout() {
-    pi_x = 65;
-    pi_y = 95;
-    pi_z = 26;
-    translate([-pi_x/2, -pi_y/2, 12])
-        rounded_cube([pi_x,pi_y,pi_z], radius=3);
-}
+
 
 module vertical_hole(pos, bore_diameter, h, fn) {
     translate(pos)
@@ -23,7 +16,7 @@ module vertical_holes(hole_x, hole_y, z_pos, bore_diameter, height, fn) {
     vertical_hole([hole_x/2, -hole_y/2, z_pos], bore_diameter, height,  fn);
 }
 
-module vertical_post(pos, d, h, bore_diameter, fn) {
+module top_plate_mounting_face(pos, d, h, bore_diameter, fn) {
     translate(pos)
         difference(){
             cylinder(d=d, h=h, $fn=fn);
@@ -31,11 +24,11 @@ module vertical_post(pos, d, h, bore_diameter, fn) {
         }
 }
 
-module vertical_posts(hole_x, hole_y, bore_diameter, post_diameter, height, z_pos, fn) {
-    vertical_post([hole_x/2, hole_y/2, z_pos], post_diameter, height, bore_diameter, fn);
-    vertical_post([-hole_x/2, hole_y/2, z_pos], post_diameter, height, bore_diameter, fn);
-    vertical_post([-hole_x/2, -hole_y/2, z_pos], post_diameter, height, bore_diameter, fn);
-    vertical_post([hole_x/2, -hole_y/2, z_pos], post_diameter, height, bore_diameter, fn);
+module top_plate_mounting_faces(hole_x, hole_y, bore_diameter, post_diameter, height, z_pos, fn) {
+    top_plate_mounting_face([hole_x/2, hole_y/2, z_pos], post_diameter, height, bore_diameter, fn);
+    top_plate_mounting_face([-hole_x/2, hole_y/2, z_pos], post_diameter, height, bore_diameter, fn);
+    top_plate_mounting_face([-hole_x/2, -hole_y/2, z_pos], post_diameter, height, bore_diameter, fn);
+    top_plate_mounting_face([hole_x/2, -hole_y/2, z_pos], post_diameter, height, bore_diameter, fn);
 }
 
 module side_walls(case_x, case_y, hole_x, hole_y, case_floor, case_wall_thickness, case_wall_height, post_diameter) {
@@ -68,7 +61,7 @@ module lift_arm_mount_recess(case_x, case_y, hole_x, hole_y, case_floor, case_wa
         cube([w, w, h]);
 }
 
-module flight_controller_wall_body(hole_x, hole_y, post_diameter, bore_diameter, case_z, case_floor, case_wall_thickness, case_wall_height, fn) {
+module flight_controller_wall_body(hole_x, hole_y, post_diameter, bore_diameter, case_floor, case_wall_thickness, case_wall_height, fn) {
     case_x = hole_x + post_diameter;
     case_y = hole_y + post_diameter;
     difference() {
@@ -81,7 +74,7 @@ module flight_controller_wall_body(hole_x, hole_y, post_diameter, bore_diameter,
                 case_wall_thickness,
                 case_wall_height,
                 post_diameter);
-            vertical_posts(hole_x, hole_y, bore_diameter, post_diameter, 3, case_floor+7, fn);
+            top_plate_mounting_faces(hole_x, hole_y, bore_diameter, post_diameter, 3, case_floor+7, fn);
         }
         vertical_holes(hole_x, hole_y, case_floor+7, bore_diameter, 3, fn);
         lift_arm_mount_recess(case_x, case_y, hole_x, hole_y, case_floor, case_wall_thickness);
@@ -95,7 +88,6 @@ module flight_controller_wall_body_part() {
         find(params, "hole_y"),
         find(params, "post_diameter"),
         find(params, "bore_diameter"),
-        find(params, "case_z"),
         find(params, "case_floor_thickness"),
         find(params, "case_wall_thickness"),
         find(params, "case_wall_height"),

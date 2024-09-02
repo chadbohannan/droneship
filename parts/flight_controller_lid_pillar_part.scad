@@ -13,7 +13,7 @@ module flight_controller_lid_pillar_part() {
     case_wall_height = find(params, "case_wall_height");
     fn = find(params, "fn");
     
-    vertical_post(
+    top_plate_mounting_face(
         [0, 0, 0],
         post_diameter,
         case_z-case_wall_height,
