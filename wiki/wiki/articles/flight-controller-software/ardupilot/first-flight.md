@@ -72,7 +72,7 @@ Hold the vehicle in the air and rotate it so each of the six faces (front, back,
 Key points:
 - Perform outdoors or away from ferrous structures, motors, and electronics.
 - External compass (GPS module) should be set as Compass 1. Disable the internal compass if `EKF_CHECK` raises compass inconsistency warnings after flight.
-- If calibration fails repeatedly, raise `COMPASS_OFFS_MAX` from 850 to 2000–3000 for setups with high magnetic interference (large motors close to FC), or reduce the **Fitness** threshold in Mission Planner.
+- If calibration fails repeatedly, raise `COMPASS_OFFS_MAX` from its default of 1800 to 2000–3000 for setups with high magnetic interference (large motors close to FC), or relax the **Fitness** threshold in Mission Planner. See [Sensors — Compass](sensors.md#compass-magnetometer) for the full procedure.
 - GPS lock is required before calibration completes on some firmware versions.
 
 ### Radio Calibration

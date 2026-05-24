@@ -29,7 +29,18 @@ Run from GCS (Setup → Mandatory Hardware → Accel Calibration). Place the veh
 
 ## Compass (Magnetometer)
 
-Most ArduPilot builds use an external compass mounted away from motor current interference. Internal compasses (on the flight controller PCB) are near power wiring and have poor performance above ~20 A total system current.
+The compass measures the Earth's magnetic field to give the EKF an absolute yaw reference. Without it, yaw is observable only from GPS motion or a dual-antenna moving-baseline GPS. Most ArduPilot builds use an external compass mounted away from motor current interference. Internal compasses (on the flight controller PCB) sit near power wiring and degrade above ~20 A total system current.
+
+ArduPilot supports up to three compass instances, ordered by priority. The highest-priority healthy compass is used by the EKF; the others provide redundancy and an inconsistency cross-check. Place the external compass at priority 1.
+
+### Magnetic Distortion: Hard Iron and Soft Iron
+
+Two distinct distortions corrupt a raw magnetometer reading, and calibration corrects each separately:
+
+- **Hard-iron** errors are constant additive offsets from permanently magnetised material near the sensor (screws, magnets, DC current paths). Calibration removes them as the per-axis `COMPASS_OFS_*` offsets.
+- **Soft-iron** errors distort the *shape* of the field, turning the ideal calibration sphere into an ellipsoid. Calibration corrects them with the diagonal and off-diagonal scale terms (`COMPASS_DIA_*` / `COMPASS_ODI_*`).
+
+ArduPilot applies offsets first, then the elliptical (soft-iron) correction, then motor compensation, in that order.
 
 ### Parameters
 
@@ -41,14 +52,26 @@ Most ArduPilot builds use an external compass mounted away from motor current in
 | `COMPASS_ORIENT` | 0 | enum | Orientation relative to vehicle (0=normal; see ROTATION_* enums for rotated mounts) |
 | `COMPASS_AUTODEC` | 1 | — | 1 = automatically compute magnetic declination from GPS position |
 | `COMPASS_DEC` | 0 | rad | Manual declination when `COMPASS_AUTODEC = 0`; find value at ngdc.noaa.gov |
+| `COMPASS_OFFS_MAX` | 1800 | — | Max allowed offset magnitude; calibration is rejected above this |
+| `COMPASS_MOTCT` | 0 | enum | Motor compensation type: 0=disabled, 1=throttle-based, 2=current-based |
 
 ### Calibration
 
-Run compass calibration (Setup → Mandatory Hardware → Compass) before first flight and after any changes to motor wiring or frame. ArduPilot offers onboard calibration (rotate vehicle through all orientations) and Mission Planner's large vehicle calibration (tumble vehicle). Modern versions auto-detect compass orientation during calibration.
+Run compass calibration (Setup → Mandatory Hardware → Compass) before first flight and after any change to motor wiring or frame. ArduPilot offers onboard calibration (rotate the vehicle through all orientations until each compass collects a full sphere of samples) and Mission Planner's large-vehicle calibration (uses GPS position and a known heading instead of tumbling). Modern versions auto-detect compass orientation during calibration.
 
-Signs of compass problems: `COMPASS OFFSETS TOO HIGH` pre-arm message (offsets > 500); `COMPASSES INCONSISTENT` (internal and external disagree > 45°); EKF yaw drift in hover.
+Each calibration reports a **fitness** score — the RMS residual of samples against the fitted sphere. Lower is better; accept "good" (green) results and re-run if fitness lands in the marginal range. A persistently poor fit usually means interference rather than insufficient rotation.
 
-Fixes: mount external compass 10+ cm from motor ESC wires; disable internal compass (`COMPASS_USE2 = 0`); re-route high-current wiring away from compass location.
+A healthy calibrated compass reads a total field magnitude in the ~200–800 mGauss band (the exact Earth field depends on location). ArduPilot uses this band as a pre-arm sanity check, so a reading outside it signals a bad sensor or strong local interference.
+
+### Motor Compensation (CompassMot)
+
+Current through power wiring generates a magnetic field proportional to throttle, biasing the compass exactly when the vehicle is working hardest. CompassMot (Setup → Optional Hardware → Compass/Motor Calib) measures this coupling while the motors spin up and stores a per-axis correction scaled by either throttle or measured current. Set `COMPASS_MOTCT = 2` (current-based) when a current sensor is fitted, as it is more accurate than throttle-based compensation. Aim for under ~30% interference reported at full throttle; higher values mean the compass must be physically relocated.
+
+### Troubleshooting
+
+Signs of compass problems: `COMPASS OFFSETS TOO HIGH` pre-arm message (offsets exceed `COMPASS_OFFS_MAX`); `COMPASSES INCONSISTENT` (two compasses disagree beyond the consistency threshold); `Bad Compass Health`; and EKF yaw drift or toilet-bowling (slow circular drift) in position-hold hover.
+
+Fixes: mount the external compass 10+ cm from motor and ESC wires; disable interference-prone internal compasses (`COMPASS_USE2 = 0`); re-route high-current wiring away from the compass; run CompassMot; and re-calibrate. For unavoidable interference, a dual-antenna moving-baseline GPS removes the compass from the yaw solution entirely.
 
 ## Barometer
 
@@ -105,4 +128,4 @@ The `SENSORS` health flags in `SYS_STATUS` (visible in Mission Planner's Flight 
 - [IMU Temperature Calibration — ArduPilot Copter docs](https://ardupilot.org/copter/docs/common-imutempcal.html) — 2026-05-22
 - [IMU Batch Sampler — ArduPilot Copter docs](https://ardupilot.org/copter/docs/common-imu-batchsampling.html) — 2026-05-22
 
-<!-- linted: 2026-05-23 -->
+<!-- linted: 2026-05-24 -->

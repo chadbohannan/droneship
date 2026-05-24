@@ -72,7 +72,7 @@ This is a development and validation tool, not ArduPilot's attitude estimator. A
 
 **Accelerometer calibration** must be performed with the aircraft level and in six orientations (level, nose up/down, left/right side up, inverted). In Mission Planner, use Initial Setup → Mandatory Hardware → Accel Calibration. Perform this calibration for each IMU independently if prompted.
 
-**Compass/magnetometer calibration** uses the onboard magnetometer in each IMU as a backup compass. An external compass (typically inside the GPS module) should be set as compass priority 1 due to its distance from motor interference. Use the compass calibration wizard and enable compass mot (COMPASS_MOTCT) if significant yaw deviation occurs at high throttle.
+**Compass/magnetometer calibration** treats each IMU's onboard magnetometer as a backup compass. An external compass (typically inside the GPS module) should be set as compass priority 1 due to its distance from motor interference. Run the compass calibration wizard, and enable motor compensation (`COMPASS_MOTCT = 2` with a current sensor fitted) if significant yaw deviation appears at high throttle. See [Sensors — Compass](../../flight-controller-software/ardupilot/sensors.md#compass-magnetometer) for hard/soft-iron theory and the full calibration procedure.
 
 **Gyro calibration** happens automatically at startup; the aircraft must remain stationary for the first 3–5 seconds after boot.
 
@@ -94,4 +94,4 @@ IMU performance degrades significantly when vibration aliases into the accelerom
 - [9DOF IMU — Emlid Navio2 docs](https://docs.emlid.com/navio2/dev/imu-mpu9250_lsm9ds1/) — 2026-05-22
 - [NAVIO2 Overview — ArduPilot Copter docs](https://ardupilot.org/copter/docs/common-navio2-overview.html) — 2026-05-22
 
-<!-- linted: 2026-05-23 -->
+<!-- linted: 2026-05-24 -->

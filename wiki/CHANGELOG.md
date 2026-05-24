@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-05-24 — Compass sensor content lint & refine
+
+Refined compass/magnetometer coverage using source detail from the ardupilot `AP_Compass` library (verified via code-rag).
+
+- `sensors.md`: expanded the Compass section — added hard-iron vs. soft-iron distortion theory (`COMPASS_OFS_*` offsets vs. `COMPASS_DIA_*`/`COMPASS_ODI_*` elliptical correction), a CompassMot motor-compensation subsection, calibration fitness scoring, the ~200–800 mGauss field sanity band, and added `COMPASS_OFFS_MAX`/`COMPASS_MOTCT` parameter rows.
+- `imu.md` (Navio2): clarified motor-compensation guidance (`COMPASS_MOTCT = 2`) and cross-linked the canonical Sensors compass procedure instead of duplicating it.
+- `first-flight.md`: resolved a contradiction — corrected the stated `COMPASS_OFFS_MAX` default from 850 to the current 1800 and cross-linked the Sensors compass section.
+
 ## 2026-05-23 — Full wiki lint
 
 All 65 articles linted across all 6 passes (Structure, Completeness, Contradictions, Enrichment, Cross-links, Prose).
